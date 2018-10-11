@@ -9,8 +9,6 @@ import App from './containers/App';
 
 const store = configureStore();
 
-store.dispatch({ type: 'PING' });
-
 ReactDOM.render(
     <Provider store={store}>
         <App />
