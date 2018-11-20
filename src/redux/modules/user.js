@@ -18,13 +18,30 @@ export const userEpic = action$ => action$.pipe(
     ))
 );
 
-const user = (state = {}, action) => {
+const defaultState = {
+  entities: {},
+  ids: [],
+}
+
+const user = (state = defaultState, action) => {
     switch(action.type) {
-        case FETCH_USER_SUCCESS: 
-            return {
-                ...state,
-                [action.payload.login]: action.payload,
-            };
+        case FETCH_USER_SUCCESS: {
+            let users = [action.payload];
+            
+            let entities = {};
+            let ids = [];
+
+            users.forEach(user => {
+              entities[user.id] = user;
+              ids.push(user.id);
+            });
+
+            return  {
+              ...state,
+              entities,
+              ids,
+            }
+        }
         default:
             return state;
     }
